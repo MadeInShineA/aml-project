@@ -24,7 +24,9 @@ def _(mo):
 
 @app.cell
 def _(kagglehub):
-    dataset_path = kagglehub.dataset_download("mohamedasem318/wesad-full-dataset")
+    dataset_path: str = kagglehub.dataset_download(
+        "mohamedasem318/wesad-full-dataset"
+    )
     dataset_path
     return (dataset_path,)
 
@@ -40,23 +42,30 @@ def _(pickle, pl):
         wrist = data["signal"]["wrist"]
 
         n = len(label)
-        return pl.DataFrame({
-            "label": label,
-            "chest_ecg":  chest["ECG"][:n, 0],
-            "chest_eda":  chest["EDA"][:n, 0],
-            "chest_emg":  chest["EMG"][:n, 0],
-            "chest_resp": chest["Resp"][:n, 0],
-            "chest_temp": chest["Temp"][:n, 0],
-        })
+        return pl.DataFrame(
+            {
+                "label": label,
+                "chest_ecg": chest["ECG"][:n, 0],
+                "chest_eda": chest["EDA"][:n, 0],
+                "chest_emg": chest["EMG"][:n, 0],
+                "chest_resp": chest["Resp"][:n, 0],
+                "chest_temp": chest["Temp"][:n, 0],
+            }
+        )
 
     return (load_subject,)
 
 
 @app.cell
-def _(Path, dataset_path, load_subject):
-    df = load_subject(str(Path(dataset_path) / "WESAD" / "S2" / "S2.pkl"))
+def _(Path, dataset_path: str, load_subject, pl):
+    df: pl.DataFrame = load_subject(str(Path(dataset_path) / "WESAD" / "S2" / "S2.pkl"))
     print(df.head())
     print(df.shape)
+
+
+@app.cell
+def _():
+    return
 
 
 if __name__ == "__main__":

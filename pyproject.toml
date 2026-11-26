@@ -10,3 +10,14 @@ dependencies = [
     "neurokit2>=0.3.0",
     "polars>=2.2.0",
 ]
+
+[dependency-groups]
+dev = [
+    "pyrefly>=1.5.0",
+]
+
+[tool.marimo.language_servers.pyrefly]
+enabled = true
+
+[tool.marimo.diagnostics]
+enabled = true

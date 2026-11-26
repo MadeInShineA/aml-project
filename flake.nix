@@ -26,7 +26,18 @@
             uv
             python3
             ruff
+
+            pyrefly
+            nodejs
           ];
+
+          # pip's pyrefly binary is dynamically linked and broken on NixOS;
+          # replace it with the nixpkgs one (marimo still detects the pip *package*)
+          shellHook = ''
+            if [ -d .venv/bin ]; then
+              ln -sf ${pkgs.pyrefly}/bin/pyrefly .venv/bin/pyrefly
+            fi
+          '';
 
           env.LD_LIBRARY_PATH =
             with pkgs;

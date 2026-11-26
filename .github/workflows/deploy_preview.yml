@@ -1,0 +1,41 @@
+name: Deploy PR previews
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+
+# Cancel an ongoing run when new commits are pushed to the same PR
+concurrency:
+  group: preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Push the preview to gh-pages
+      pull-requests: write # Comment the preview URL on the PR
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Quarto
+        if: github.event.action != 'closed'
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render site
+        # Skip rendering when the PR is closed: the action only removes the preview
+        if: github.event.action != 'closed'
+        run: quarto render
+
+      - name: Deploy preview
+        # Deploys to gh-pages under pr-preview/pr-<number>/ and posts the URL as a PR comment
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: ./_site/
+          preview-branch: gh-pages
+          qr-code: true

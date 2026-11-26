@@ -16,8 +16,8 @@ website:
               text: Home
             - text: Notebooks
               menu:
-                  - href: site/notebooks/preprocessing.html
-                    text: Preprocessing
+                  - href: site/notebooks/01_load_data.html
+                    text: Load data
         tools:
             - icon: github
               href: https://github.com/MadeInShineA/aml-project

@@ -1,5 +1,6 @@
 .direnv/
 *__marimo__/
+/data/
 
 /.quarto/
 **/*.quarto_ipynb

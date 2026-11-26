@@ -1,2 +1,6 @@
 .direnv/
 *__marimo__/
+
+/.quarto/
+**/*.quarto_ipynb
+_site/

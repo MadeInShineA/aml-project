@@ -29,6 +29,7 @@
 
             pyrefly
             nodejs
+            quarto
           ];
 
           # pip's pyrefly binary is dynamically linked and broken on NixOS;
